@@ -8,7 +8,7 @@ int main()
 {
     srand (time(NULL));
     
-    Galaxy galaxy(n_planet, height/4, 1, 3, false);
+    Galaxy galaxy(n_planet, height/4, 1, 2, false);
     
     galaxy.init();
     
