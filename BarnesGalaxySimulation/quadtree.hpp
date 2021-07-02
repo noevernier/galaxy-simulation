@@ -25,13 +25,13 @@ public:
     QuadTree *southeast;
     
     
-    Rectangle boundary;
+    Rectangle chunk;
     vector<Planet> planets;
     
     bool divided;
     
     QuadTree();
-    QuadTree(Rectangle boundary, int n);
+    QuadTree(Rectangle chunk, int n);
     void subdivide();
     bool insert(Planet planet);
     void draw(RenderWindow &window);

@@ -13,17 +13,9 @@ Rectangle::Rectangle(float x, float y, float w, float h){
     this->y = y;
     this->w = w;
     this->h = h;
-    
 }
 
 bool Rectangle::contains(Planet planet){
-    return (planet.pos.x > x - w && planet.pos.x < x+w && planet.pos.y > y-h && planet.pos.y < y+h);
-}
-
-bool Rectangle::intersects(Rectangle range) {
-    return !(range.x - range.w > this->x + this->w ||
-             range.x + this->w < this->x - this->w ||
-             range.y - range.h > this->y + this->h ||
-             range.y + this->h < this->y - this->h);
+    return (planet.pos.x > x && planet.pos.x < x+w && planet.pos.y > y && planet.pos.y < y+h);
 }
 

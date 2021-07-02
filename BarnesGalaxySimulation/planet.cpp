@@ -33,7 +33,7 @@ void Planet::update(){
 }
 
 void Planet::applyForce(Vector2f force){
-    this->acc+=force/this->mass;
+    this->acc+=force;
 }
 
 

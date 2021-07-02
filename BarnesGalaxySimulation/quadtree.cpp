@@ -10,36 +10,36 @@
 
 QuadTree::QuadTree(){}
 
-QuadTree::QuadTree(Rectangle boundary, int n){
-    this->boundary = boundary;
+QuadTree::QuadTree(Rectangle chunk, int n){
+    this->chunk = chunk;
     this->n = n;
     this->divided = false;
     
 }
 
 void QuadTree::subdivide(){
-    float x = boundary.x;
-    float y = boundary.y;
-    float h = boundary.h;
-    float w = boundary.w;
+    float x = chunk.x;
+    float y = chunk.y;
+    float h = chunk.h;
+    float w = chunk.w;
     
-    Rectangle nw(x+w/2, y-h/2, w/2, h/2);
+    Rectangle nw(x, y, w/2, h/2);
     this->northwest = new QuadTree(nw, n);
     
-    Rectangle ne(x-w/2, y-w/2, w/2, h/2);
+    Rectangle ne(x+w/2, y, w/2, h/2);
     this->northeast = new QuadTree(ne, n);
     
-    Rectangle sw(x+w/2, y+w/2, w/2, h/2);
+    Rectangle sw(x, y+h/2, w/2, h/2);
     this->southwest= new QuadTree(sw, n);
     
-    Rectangle se(x-w/2, y+w/2, w/2, h/2);
+    Rectangle se(x+w/2, y+h/2, w/2, h/2);
     this->southeast = new QuadTree(se, n);
     
     this->divided = true;
 }
 
 bool QuadTree::insert(Planet planet){
-    if (!this->boundary.contains(planet)) {
+    if (!this->chunk.contains(planet)) {
         return false;
     }
     
@@ -104,8 +104,8 @@ Vector2f QuadTree::getCenterOfMass(){
 
 void QuadTree::draw(RenderWindow &window){
     
-    RectangleShape rectangle(Vector2f(boundary.w*2, boundary.h*2));
-    rectangle.setPosition(boundary.x-boundary.w, boundary.y-boundary.h);
+    RectangleShape rectangle(Vector2f(chunk.w, chunk.h));
+    rectangle.setPosition(chunk.x, chunk.y);
     rectangle.setFillColor(Color(255,255,255,0));
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(Color(255,255,255,100));
@@ -126,7 +126,7 @@ void QuadTree::query(Planet planet, vector<Planet> &found){
     Vector2f center_of_mass = getCenterOfMass();
     
     float dist = sqrt(pow(planet.pos.x - center_of_mass.x, 2) + pow(planet.pos.y - center_of_mass.y, 2));
-    float theta = this->boundary.w / dist;
+    float theta = this->chunk.w / dist;
     if(theta < 0.5 && dist>1){
         Planet p(center_of_mass.x, center_of_mass.y, total_mass);
         found.push_back(p);

@@ -15,22 +15,23 @@ Galaxy::Galaxy(int planet_number, float size, float min_mass, float max_mass, bo
     this->min_mass = min_mass;
     this->max_mass = max_mass;
     this->draw_qt = draw_qt;
-    this->boundary = new Rectangle(width/2, height/2, width/2, height/2);
+    this->chunk = new Rectangle(0, 0, width, height);
 }
 
 void Galaxy::init() {
     for (int i = 0; i < n; i++) {
+        
         float theta = RandomFloat(0,2*M_PI);
-        float rayon = RandomFloat(0,this->s);
+        float radius = RandomFloat(0,this->s);
         
-        float m = map_value(rayon, 0, this->s, this->min_mass, this->max_mass);
+        float m = map_value(radius, 0, this->s, this->min_mass, this->max_mass);
         
-        float x = rayon * cos(theta)+width/2;
-        float y = rayon * sin(theta)+height/2;
-        float speed = map_value(rayon, 0,this->s, 0,5);
+        float x = radius * cos(theta)+width/2;
+        float y = radius * sin(theta)+height/2;
+        float speed = map_value(radius, 0,this->s, 0,5);
         
         
-        Planet planet(x, y, m, theta, rayon, speed);
+        Planet planet(x, y, m, theta, radius, speed);
         planets.push_back(planet);
     }
     
@@ -41,7 +42,7 @@ void Galaxy::init() {
 
 void Galaxy::update() {
     
-    qt = new QuadTree(*boundary, 1);
+    qt = new QuadTree(*chunk, 1);
     
     for (int i = 0; i < this->n; i++) {
         qt->insert(planets[i]);
@@ -57,8 +58,8 @@ void Galaxy::update() {
                     dist = 2;
                 }
                 force = planets[j].pos - planets[i].pos;
-                force.x *= G*(planets[i].mass * planets[j].mass) / dist;
-                force.y *= G*(planets[i].mass * planets[j].mass) / dist;
+                force.x *= G*(planets[j].mass) / dist;
+                force.y *= G*(planets[j].mass) / dist;
                 planets[i].applyForce(force);
             }
         }
@@ -71,8 +72,8 @@ void Galaxy::draw(RenderWindow &window) {
         
     }
     
-    //vector<Planet> founds;
-    //qt->query(planets[0], founds);
+    vector<Planet> founds;
+    qt->query(planets[0], founds);
     
     /*for(auto &p : founds){
         p.draw(window, pixels, 255);

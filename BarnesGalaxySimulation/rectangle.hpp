@@ -19,7 +19,6 @@ public:
     Rectangle(float x, float y, float w, float h);
     
     bool contains(Planet planet);
-    bool intersects(Rectangle range);
 };
 
 #endif /* rectangle_hpp */
