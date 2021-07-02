@@ -12,7 +12,7 @@
 #include "rectangle.hpp"
 #include "planet.hpp"
 #include "utils.hpp"
-#include <vector>
+
 
 using namespace std;
 
@@ -29,6 +29,7 @@ public:
     vector<Planet> planets;
     
     bool divided;
+    int total_mass;
     
     QuadTree();
     QuadTree(Rectangle chunk, int n);
@@ -37,7 +38,7 @@ public:
     void draw(RenderWindow &window);
     void query(Planet planet, vector<Planet> &found);
     float getMass();
-    Vector2f getCenterOfMass();
+    Vector getCenterOfMass();
 };
 
 

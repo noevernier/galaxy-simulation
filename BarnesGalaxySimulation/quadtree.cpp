@@ -14,6 +14,7 @@ QuadTree::QuadTree(Rectangle chunk, int n){
     this->chunk = chunk;
     this->n = n;
     this->divided = false;
+    this->total_mass = 0;
     
 }
 
@@ -39,6 +40,7 @@ void QuadTree::subdivide(){
 }
 
 bool QuadTree::insert(Planet planet){
+    this->total_mass += planet.mass;
     if (!this->chunk.contains(planet)) {
         return false;
     }
@@ -59,46 +61,28 @@ bool QuadTree::insert(Planet planet){
     return false;
 }
 
-float QuadTree::getMass(){
-    float ttm = 0;
-    for (int i = 0; i < planets.size(); i++) {
-        ttm += planets[i].mass;
-    }
-    if(!this->divided){
-        return ttm;
-    } else {
-        return ttm+ this->northeast->getMass() + this->northwest->getMass()+this->southeast->getMass()+this->southwest->getMass();
-    }
-}
-
-Vector2f QuadTree::getCenterOfMass(){
+Vector QuadTree::getCenterOfMass(){
 
     
-    Vector2f com(0,0);
+    Vector com(0,0);
     
-        
-    for (int i = 0; i < planets.size(); i++) {
-        
-        com.x += planets[i].pos.x * planets[i].mass/getMass();
-        com.y += planets[i].pos.y * planets[i].mass/getMass();
+    if(planets.size()==1){
+        for (int i = 0; i < this->n; i++) {
+            cout << planets[i].pos << endl;
+            com = com + planets[i].pos * planets[i].mass;
+        }
     }
     
     
-    if(!this->divided){
-        return com;
+    if(!this->divided && planets.size()==1){
+        return com / (float)this->total_mass;
     } else {
-        com.x += (this->northeast->getCenterOfMass().x * this->northeast->getMass() +
-                  this->northwest->getCenterOfMass().x * this->northwest->getMass() +
-                  this->southeast->getCenterOfMass().x * this->southeast->getMass() +
-                  this->southwest->getCenterOfMass().x * this->southwest->getMass()) / (
-                  this->northeast->getMass() +  this->northwest->getMass() + this->southeast->getMass() +this->southwest->getMass()) ;
+        com  = com + this->northeast->getCenterOfMass() * (float)this->northeast->total_mass +
+        this->northwest->getCenterOfMass() * (float)this->northwest->total_mass +
+        this->southeast->getCenterOfMass() * (float)this->southeast->total_mass +
+        this->southwest->getCenterOfMass() * (float)this->southwest->total_mass;
         
-        com.y += (this->northeast->getCenterOfMass().y * this->northeast->getMass() +
-                  this->northwest->getCenterOfMass().y * this->northwest->getMass() +
-                  this->southeast->getCenterOfMass().y * this->southeast->getMass() +
-                  this->southwest->getCenterOfMass().y * this->southwest->getMass())/ (
-                                                                                       this->northeast->getMass() +  this->northwest->getMass() + this->southeast->getMass() +this->southwest->getMass()) ;
-        return com;
+        return com / ((float)this->northeast->total_mass+(float)this->northwest->total_mass+(float)this->southeast->total_mass+(float)this->southwest->total_mass);
     }
 }
 
@@ -122,12 +106,13 @@ void QuadTree::draw(RenderWindow &window){
 
 void QuadTree::query(Planet planet, vector<Planet> &found){
     
-    float total_mass = getMass();
-    Vector2f center_of_mass = getCenterOfMass();
+    Vector center_of_mass = getCenterOfMass();
     
-    float dist = sqrt(pow(planet.pos.x - center_of_mass.x, 2) + pow(planet.pos.y - center_of_mass.y, 2));
-    float theta = this->chunk.w / dist;
-    if(theta < 0.5 && dist>1){
+    float dist = get_distance(planet.pos, center_of_mass);
+
+    float theta = (this->chunk.w * this->chunk.w) / dist;
+    
+    if(theta < 0.5 && dist>2){
         Planet p(center_of_mass.x, center_of_mass.y, total_mass);
         found.push_back(p);
     } else {
@@ -136,6 +121,5 @@ void QuadTree::query(Planet planet, vector<Planet> &found){
         this->southeast->query(planet, found);
         this->southwest->query(planet, found);
     }
-    
     
 }

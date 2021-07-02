@@ -15,13 +15,14 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include "vector/vector.hpp"
 
 
 using namespace sf;
 using namespace std;
 
 const float G = 0.03;
-const int n_planet = 4000;
+const int n_planet = 5000;
 const int width = 800;
 const int height = 800;
 

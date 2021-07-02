@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC5B5B8E268F3D3A007903F7 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5B5B8C268F3D3A007903F7 /* vector.cpp */; };
 		DC668ED2268A281600CCE1ED /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC668ED1268A281600CCE1ED /* main.cpp */; };
 		DC668EE3268A28E700CCE1ED /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC668EE1268A28E700CCE1ED /* planet.cpp */; };
 		DC668EE6268A28F200CCE1ED /* quadtree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC668EE4268A28F200CCE1ED /* quadtree.cpp */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC5B5B8C268F3D3A007903F7 /* vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vector.cpp; sourceTree = "<group>"; };
+		DC5B5B8D268F3D3A007903F7 /* vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vector.hpp; sourceTree = "<group>"; };
 		DC668EC9268A281600CCE1ED /* BarnesGalaxySimulation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarnesGalaxySimulation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC668ED1268A281600CCE1ED /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DC668EE1268A28E700CCE1ED /* planet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = planet.cpp; sourceTree = "<group>"; };
@@ -41,6 +44,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC5B5B8B268F3D25007903F7 /* vector */ = {
+			isa = PBXGroup;
+			children = (
+				DC5B5B8C268F3D3A007903F7 /* vector.cpp */,
+				DC5B5B8D268F3D3A007903F7 /* vector.hpp */,
+			);
+			path = vector;
+			sourceTree = "<group>";
+		};
 		DC668EBF268A281600CCE1ED = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +72,7 @@
 		DC668ECB268A281600CCE1ED /* BarnesGalaxySimulation */ = {
 			isa = PBXGroup;
 			children = (
+				DC5B5B8B268F3D25007903F7 /* vector */,
 				DC668ED1268A281600CCE1ED /* main.cpp */,
 				DC668EE1268A28E700CCE1ED /* planet.cpp */,
 				DC668EE2268A28E700CCE1ED /* planet.hpp */,
@@ -170,6 +183,7 @@
 				DC668EE6268A28F200CCE1ED /* quadtree.cpp in Sources */,
 				DC668EE3268A28E700CCE1ED /* planet.cpp in Sources */,
 				DC668EE9268A290000CCE1ED /* rectangle.cpp in Sources */,
+				DC5B5B8E268F3D3A007903F7 /* vector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,10 +9,7 @@
 #ifndef planet_hpp
 #define planet_hpp
 
-#include <stdio.h>
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "utils.hpp"
 
 using namespace sf;
 
@@ -21,12 +18,12 @@ public:
     float mass;
     float size;
     float max_acc;
-    Vector2f pos;
-    Vector2f vel;
-    Vector2f acc;
+    Vector pos;
+    Vector vel;
+    Vector acc;
     Planet(float x, float y, float m);
     Planet(float x, float y, float m, float a, float r, float speed);
-    void applyForce(Vector2f force);
+    void applyForce(Vector force);
     void draw(RenderWindow &window,  Uint8 * pixels, Uint8 c);
     void update();
 };

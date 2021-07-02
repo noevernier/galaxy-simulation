@@ -24,13 +24,16 @@ public:
     float min_mass;
     float max_mass;
     bool draw_qt;
+    
     Texture texture;
     Sprite sprite;
     Uint8 *pixels;
     vector<Planet> planets;
     Rectangle* chunk;
     QuadTree* qt;
+    
     Galaxy(int planet_number, float size, float min_mass, float max_mass, bool draw_qt);
+    
     void init();
     void update();
     void draw(RenderWindow &window);

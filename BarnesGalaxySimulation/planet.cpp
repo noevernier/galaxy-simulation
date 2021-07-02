@@ -1,4 +1,3 @@
-#include "utils.hpp"
 #include "planet.hpp"
 
 Planet::Planet(float x, float y, float m){
@@ -22,17 +21,16 @@ Planet::Planet(float x, float y, float m, float a, float r, float speed){
 }
 
 void Planet::update(){
-    float norm = sqrtf(pow(this->acc.x,2) + pow(this->acc.y, 2));
-    if(norm > this->max_acc){
-        this->acc = (this->acc/norm) * this->max_acc;
+    if(this->acc.get_norm_2() > this->max_acc){
+        this->acc.set_norm(max_acc);
     }
     this->vel+=this->acc;
     this->pos+=this->vel;
     
-    this->acc = Vector2f(0,0);
+    this->acc*=0;
 }
 
-void Planet::applyForce(Vector2f force){
+void Planet::applyForce(Vector force){
     this->acc+=force;
 }
 

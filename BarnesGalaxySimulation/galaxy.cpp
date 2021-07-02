@@ -42,24 +42,24 @@ void Galaxy::init() {
 
 void Galaxy::update() {
     
-    qt = new QuadTree(*chunk, 1);
+    /*qt = new QuadTree(*chunk, 1);
     
     for (int i = 0; i < this->n; i++) {
         qt->insert(planets[i]);
-    }
+    }*/
     
-    Vector2f force;
+    Vector force;
     
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if(i!=j){
-                float dist = pow( pow(planets[i].pos.x - planets[j].pos.x, 2) +  pow(planets[i].pos.y-planets[j].pos.y, 2), 3/2);
-                if(dist < 2){
+                float dist = get_distance(planets[i].pos, planets[j].pos);
+                /*if(dist < 2){
                     dist = 2;
-                }
+                }*/
                 force = planets[j].pos - planets[i].pos;
-                force.x *= G*(planets[j].mass) / dist;
-                force.y *= G*(planets[j].mass) / dist;
+                force.normalize();
+                force *= G * (planets[j].mass) / (dist);
                 planets[i].applyForce(force);
             }
         }
@@ -72,8 +72,8 @@ void Galaxy::draw(RenderWindow &window) {
         
     }
     
-    vector<Planet> founds;
-    qt->query(planets[0], founds);
+    //vector<Planet> founds;
+    //qt->query(planets[0], founds);
     
     /*for(auto &p : founds){
         p.draw(window, pixels, 255);
