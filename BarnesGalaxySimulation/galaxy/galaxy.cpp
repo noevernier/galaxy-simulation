@@ -22,13 +22,13 @@ void Galaxy::init() {
     for (int i = 0; i < n; i++) {
         
         float theta = RandomFloat(0,2*M_PI);
-        float radius = RandomFloat(0,this->s);
+        float radius = RandomFloat(0,this->s+(rand()%100)-50);
         
         float m = map_value(radius, 0, this->s, this->min_mass, this->max_mass);
         
         float x = radius * cos(theta)+width/2;
         float y = radius * sin(theta)+height/2;
-        float speed = map_value(radius, 0,this->s, 0,5);
+        float speed = map_value(radius, 0,this->s, 1, 6);
         
         
         Planet planet(x, y, m, theta, radius, speed);

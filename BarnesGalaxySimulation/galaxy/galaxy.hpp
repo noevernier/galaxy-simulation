@@ -21,8 +21,8 @@ class Galaxy{
 public:
     int n;
     float s;
-    float min_mass;
-    float max_mass;
+    double min_mass;
+    double max_mass;
     bool draw_qt;
     
     Texture texture;

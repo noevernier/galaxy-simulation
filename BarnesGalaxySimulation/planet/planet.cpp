@@ -24,8 +24,8 @@ void Planet::update(){
     if(this->acc.get_norm_2() > this->max_acc){
         this->acc.set_norm(max_acc);
     }
-    this->vel+=this->acc;
-    this->pos+=this->vel;
+    this->vel+=this->acc*DT;
+    this->pos+=this->vel*DT;
     
     this->acc*=0;
 }
@@ -39,8 +39,8 @@ void Planet::draw(RenderWindow &window, Uint8 *pixels, Uint8 c){
     if(this->pos.y >= 0 && this->pos.y < height && this->pos.x >= 0 && this->pos.x < width){
         int ind = floor(this->pos.y) * width + floor(this->pos.x);
         pixels[ind*4]= 255;
-        pixels[ind*4 + 1] = c;
-        pixels[ind*4+ 2] = c;
+        pixels[ind*4 + 1] = 255;
+        pixels[ind*4+ 2] = 255;
         pixels[ind*4+ 3] = 255;
     }
 }

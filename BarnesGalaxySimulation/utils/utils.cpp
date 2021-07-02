@@ -16,8 +16,8 @@ float RandomFloat(float min, float max)
     return (random*range) + min;
 }
 
-float map_value(float inValue, float minInRange, float maxInRange, float minOutRange,float maxOutRange)
+float map_value(double inValue, double minInRange, double maxInRange, double minOutRange,double maxOutRange)
 {
-    float a = (maxOutRange - minOutRange) / (maxInRange - minInRange);
+    double a = (maxOutRange - minOutRange) / (maxInRange - minInRange);
     return minOutRange + (inValue - minInRange) * a;
 }

@@ -17,16 +17,18 @@
 #include <vector>
 #include "../vector/vector.hpp"
 
+#define DT 0.9
+
 
 using namespace sf;
 using namespace std;
 
-const float G = 0.03;
-const int n_planet = 7000;
+const double G = 6.674e-11;
+const int n_planet = 100000;
 const int width = 800;
 const int height = 800;
 
 float RandomFloat(float min, float max);
-float map_value(float inValue, float minInRange, float maxInRange, float minOutRange,float maxOutRange);
+float map_value(double inValue, double minInRange, double maxInRange, double minOutRange,double maxOutRange);
 
 #endif /* utils_hpp */
