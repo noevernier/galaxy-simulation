@@ -15,7 +15,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include "vector/vector.hpp"
+#include "../vector/vector.hpp"
 
 
 using namespace sf;

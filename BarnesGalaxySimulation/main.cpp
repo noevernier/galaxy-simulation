@@ -1,7 +1,7 @@
 #include "utils.hpp"
 #include "planet.hpp"
 #include "quadtree.hpp"
-#include "rectangle.hpp"
+#include "rectangle/rectangle.hpp"
 #include "galaxy.hpp"
 
 int main()

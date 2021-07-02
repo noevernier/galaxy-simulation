@@ -53,6 +53,51 @@
 			path = vector;
 			sourceTree = "<group>";
 		};
+		DC5B5B8F268F433F007903F7 /* rectangle */ = {
+			isa = PBXGroup;
+			children = (
+				DC668EE8268A290000CCE1ED /* rectangle.hpp */,
+				DC668EE7268A290000CCE1ED /* rectangle.cpp */,
+			);
+			path = rectangle;
+			sourceTree = "<group>";
+		};
+		DC5B5B90268F43A2007903F7 /* planet */ = {
+			isa = PBXGroup;
+			children = (
+				DC668EE1268A28E700CCE1ED /* planet.cpp */,
+				DC668EE2268A28E700CCE1ED /* planet.hpp */,
+			);
+			path = planet;
+			sourceTree = "<group>";
+		};
+		DC5B5B91268F43AB007903F7 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				DC668EEA268A291300CCE1ED /* utils.cpp */,
+				DC668EEB268A291300CCE1ED /* utils.hpp */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		DC5B5B92268F43B4007903F7 /* galaxy */ = {
+			isa = PBXGroup;
+			children = (
+				DC668EED268A291E00CCE1ED /* galaxy.cpp */,
+				DC668EEE268A291E00CCE1ED /* galaxy.hpp */,
+			);
+			path = galaxy;
+			sourceTree = "<group>";
+		};
+		DC5B5B93268F43BB007903F7 /* quadtree */ = {
+			isa = PBXGroup;
+			children = (
+				DC668EE4268A28F200CCE1ED /* quadtree.cpp */,
+				DC668EE5268A28F200CCE1ED /* quadtree.hpp */,
+			);
+			path = quadtree;
+			sourceTree = "<group>";
+		};
 		DC668EBF268A281600CCE1ED = {
 			isa = PBXGroup;
 			children = (
@@ -72,18 +117,13 @@
 		DC668ECB268A281600CCE1ED /* BarnesGalaxySimulation */ = {
 			isa = PBXGroup;
 			children = (
+				DC5B5B93268F43BB007903F7 /* quadtree */,
+				DC5B5B92268F43B4007903F7 /* galaxy */,
+				DC5B5B91268F43AB007903F7 /* utils */,
+				DC5B5B90268F43A2007903F7 /* planet */,
+				DC5B5B8F268F433F007903F7 /* rectangle */,
 				DC5B5B8B268F3D25007903F7 /* vector */,
 				DC668ED1268A281600CCE1ED /* main.cpp */,
-				DC668EE1268A28E700CCE1ED /* planet.cpp */,
-				DC668EE2268A28E700CCE1ED /* planet.hpp */,
-				DC668EE4268A28F200CCE1ED /* quadtree.cpp */,
-				DC668EE5268A28F200CCE1ED /* quadtree.hpp */,
-				DC668EE7268A290000CCE1ED /* rectangle.cpp */,
-				DC668EE8268A290000CCE1ED /* rectangle.hpp */,
-				DC668EEA268A291300CCE1ED /* utils.cpp */,
-				DC668EEB268A291300CCE1ED /* utils.hpp */,
-				DC668EED268A291E00CCE1ED /* galaxy.cpp */,
-				DC668EEE268A291E00CCE1ED /* galaxy.hpp */,
 			);
 			path = BarnesGalaxySimulation;
 			sourceTree = "<group>";
