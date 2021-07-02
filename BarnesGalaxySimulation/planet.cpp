@@ -35,3 +35,14 @@ void Planet::update(){
 void Planet::applyForce(Vector2f force){
     this->acc+=force/this->mass;
 }
+
+
+void Planet::draw(RenderWindow &window, Uint8 *pixels, Uint8 c){
+    if(this->pos.y >= 0 && this->pos.y < height && this->pos.x >= 0 && this->pos.x < width){
+        int ind = floor(this->pos.y) * width + floor(this->pos.x);
+        pixels[ind*4]= 255;
+        pixels[ind*4 + 1] = c;
+        pixels[ind*4+ 2] = c;
+        pixels[ind*4+ 3] = 255;
+    }
+}

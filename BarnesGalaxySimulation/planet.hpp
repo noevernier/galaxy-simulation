@@ -27,7 +27,7 @@ public:
     Planet(float x, float y, float m);
     Planet(float x, float y, float m, float a, float r, float speed);
     void applyForce(Vector2f force);
-    void draw(RenderWindow &window);
+    void draw(RenderWindow &window,  Uint8 * pixels, Uint8 c);
     void update();
 };
 

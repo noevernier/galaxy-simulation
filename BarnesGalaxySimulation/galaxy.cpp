@@ -71,17 +71,17 @@ void Galaxy::draw(RenderWindow &window) {
         
     }
     
+    //vector<Planet> founds;
+    //qt->query(planets[0], founds);
+    
+    /*for(auto &p : founds){
+        p.draw(window, pixels, 255);
+    }*/
+    
     for (int i = 0; i < n_planet; i++) {
         planets[i].update();
-        //planets[i].draw(window);
-        if(planets[i].pos.y >= 0 &&planets[i].pos.y < height && planets[i].pos.x >= 0 && planets[i].pos.x < width){
-            int ind = floor(planets[i].pos.y) * width + floor(planets[i].pos.x);
-            float c = map_value(planets[i].mass, this->min_mass, this->max_mass, 0, 255);
-            pixels[ind*4]= 255;
-            pixels[ind*4 + 1] = c;
-            pixels[ind*4+ 2] = c;
-            pixels[ind*4+ 3] = 255;
-        }
+        Uint8 c = (Uint8)map_value(planets[i].mass, this->min_mass, this->max_mass, 0, 255);
+        planets[i].draw(window, pixels, c);
     }
     
     texture.update(pixels);

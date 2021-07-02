@@ -21,7 +21,7 @@ using namespace sf;
 using namespace std;
 
 const float G = 0.03;
-const int n_planet = 100;
+const int n_planet = 4000;
 const int width = 800;
 const int height = 800;
 
