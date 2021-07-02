@@ -24,12 +24,13 @@ public:
     QuadTree *southwest;
     QuadTree *southeast;
     
+    Vector center_of_mass;
     
     Rectangle chunk;
     vector<Planet> planets;
     
     bool divided;
-    int total_mass;
+    float total_mass;
     
     QuadTree();
     QuadTree(Rectangle chunk, int n);
@@ -37,8 +38,8 @@ public:
     bool insert(Planet planet);
     void draw(RenderWindow &window);
     void query(Planet planet, vector<Planet> &found);
-    float getMass();
-    Vector getCenterOfMass();
+
+    
 };
 
 

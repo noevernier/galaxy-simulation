@@ -42,24 +42,26 @@ void Galaxy::init() {
 
 void Galaxy::update() {
     
-    /*qt = new QuadTree(*chunk, 1);
+    qt = new QuadTree(*chunk, 1);
     
     for (int i = 0; i < this->n; i++) {
         qt->insert(planets[i]);
-    }*/
+    }
     
     Vector force;
     
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if(i!=j){
-                float dist = get_distance(planets[i].pos, planets[j].pos);
-                /*if(dist < 2){
+        vector<Planet> founds;
+        qt->query(planets[i], founds);
+        for(int j = 0; j < founds.size(); j++){
+            if(planets[i].pos.x != founds[j].pos.x && planets[i].pos.y != founds[j].pos.y){
+                float dist = get_distance(planets[i].pos, founds[j].pos);
+                if(dist < 2){
                     dist = 2;
-                }*/
-                force = planets[j].pos - planets[i].pos;
+                }
+                force = founds[j].pos - planets[i].pos;
                 force.normalize();
-                force *= G * (planets[j].mass) / (dist);
+                force *= G * (founds[j].mass) / (dist);
                 planets[i].applyForce(force);
             }
         }
@@ -71,14 +73,7 @@ void Galaxy::draw(RenderWindow &window) {
         pixels[i] = 0;
         
     }
-    
-    //vector<Planet> founds;
-    //qt->query(planets[0], founds);
-    
-    /*for(auto &p : founds){
-        p.draw(window, pixels, 255);
-    }*/
-    
+
     for (int i = 0; i < n_planet; i++) {
         planets[i].update();
         Uint8 c = (Uint8)map_value(planets[i].mass, this->min_mass, this->max_mass, 0, 255);

@@ -17,7 +17,7 @@ Planet::Planet(float x, float y, float m, float a, float r, float speed){
     acc.y = 0;
     mass = m;
     
-    max_acc = 0.3;
+    max_acc = 0.1;
 }
 
 void Planet::update(){
