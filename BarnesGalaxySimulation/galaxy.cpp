@@ -27,7 +27,7 @@ void Galaxy::init() {
         
         float x = rayon * cos(theta)+width/2;
         float y = rayon * sin(theta)+height/2;
-        float speed = map_value(rayon, 0,this->s, 1,6);
+        float speed = map_value(rayon, 0,this->s, 0,5);
         
         
         Planet planet(x, y, m, theta, rayon, speed);

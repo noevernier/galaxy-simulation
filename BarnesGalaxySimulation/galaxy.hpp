@@ -37,4 +37,4 @@ public:
     
 };
 
-#endif /* galaxy_hpp */
+#endif

@@ -24,6 +24,7 @@ public:
     Vector2f pos;
     Vector2f vel;
     Vector2f acc;
+    Planet(float x, float y, float m);
     Planet(float x, float y, float m, float a, float r, float speed);
     void applyForce(Vector2f force);
     void draw(RenderWindow &window);

@@ -59,6 +59,49 @@ bool QuadTree::insert(Planet planet){
     return false;
 }
 
+float QuadTree::getMass(){
+    float ttm = 0;
+    for (int i = 0; i < planets.size(); i++) {
+        ttm += planets[i].mass;
+    }
+    if(!this->divided){
+        return ttm;
+    } else {
+        return ttm+ this->northeast->getMass() + this->northwest->getMass()+this->southeast->getMass()+this->southwest->getMass();
+    }
+}
+
+Vector2f QuadTree::getCenterOfMass(){
+
+    
+    Vector2f com(0,0);
+    
+        
+    for (int i = 0; i < planets.size(); i++) {
+        
+        com.x += planets[i].pos.x * planets[i].mass/getMass();
+        com.y += planets[i].pos.y * planets[i].mass/getMass();
+    }
+    
+    
+    if(!this->divided){
+        return com;
+    } else {
+        com.x += (this->northeast->getCenterOfMass().x * this->northeast->getMass() +
+                  this->northwest->getCenterOfMass().x * this->northwest->getMass() +
+                  this->southeast->getCenterOfMass().x * this->southeast->getMass() +
+                  this->southwest->getCenterOfMass().x * this->southwest->getMass()) / (
+                  this->northeast->getMass() +  this->northwest->getMass() + this->southeast->getMass() +this->southwest->getMass()) ;
+        
+        com.y += (this->northeast->getCenterOfMass().y * this->northeast->getMass() +
+                  this->northwest->getCenterOfMass().y * this->northwest->getMass() +
+                  this->southeast->getCenterOfMass().y * this->southeast->getMass() +
+                  this->southwest->getCenterOfMass().y * this->southwest->getMass())/ (
+                                                                                       this->northeast->getMass() +  this->northwest->getMass() + this->southeast->getMass() +this->southwest->getMass()) ;
+        return com;
+    }
+}
+
 void QuadTree::draw(RenderWindow &window){
     
     RectangleShape rectangle(Vector2f(boundary.w*2, boundary.h*2));
@@ -67,6 +110,7 @@ void QuadTree::draw(RenderWindow &window){
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(Color(255,255,255,100));
     window.draw(rectangle);
+
     if(this->divided){
         this->northwest->draw(window);
         this->northeast->draw(window);
@@ -76,20 +120,22 @@ void QuadTree::draw(RenderWindow &window){
     
 }
 
-void QuadTree::query(Rectangle range, vector<Planet> &found){
-    if(!this->boundary.intersects(range)){
-        
+void QuadTree::query(Planet planet, vector<Planet> &found){
+    
+    float total_mass = getMass();
+    Vector2f center_of_mass = getCenterOfMass();
+    
+    float dist = sqrt(pow(planet.pos.x - center_of_mass.x, 2) + pow(planet.pos.y - center_of_mass.y, 2));
+    float theta = this->boundary.w / dist;
+    if(theta < 0.5 && dist>1){
+        Planet p(center_of_mass.x, center_of_mass.y, total_mass);
+        found.push_back(p);
     } else {
-        for (int i = 0; i < planets.size(); i++) {
-            if(range.contains(planets[i])){
-                found.push_back(planets[i]);
-            }
-        }
-        if(this->divided){
-            this->northwest->query(range, found);
-            this->northeast->query(range, found);
-            this->southwest->query(range, found);
-            this->southeast->query(range, found);
-        }
+        this->northwest->query(planet, found);
+        this->northeast->query(planet, found);
+        this->southeast->query(planet, found);
+        this->southwest->query(planet, found);
     }
+    
+    
 }

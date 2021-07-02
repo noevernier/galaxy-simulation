@@ -11,6 +11,7 @@
 
 #include "rectangle.hpp"
 #include "planet.hpp"
+#include "utils.hpp"
 #include <vector>
 
 using namespace std;
@@ -18,11 +19,11 @@ using namespace std;
 class QuadTree {
 public:
     int n;
-    
     QuadTree *northwest;
     QuadTree *northeast;
     QuadTree *southwest;
     QuadTree *southeast;
+    
     
     Rectangle boundary;
     vector<Planet> planets;
@@ -34,7 +35,9 @@ public:
     void subdivide();
     bool insert(Planet planet);
     void draw(RenderWindow &window);
-    void query(Rectangle range, vector<Planet> &found);
+    void query(Planet planet, vector<Planet> &found);
+    float getMass();
+    Vector2f getCenterOfMass();
 };
 
 
