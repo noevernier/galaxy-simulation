@@ -38,6 +38,8 @@ public:
     bool insert(Planet planet);
     void draw(RenderWindow &window);
     void query(Planet planet, vector<Planet> &found);
+    
+    void Free();
 
     
 };

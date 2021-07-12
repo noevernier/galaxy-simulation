@@ -35,8 +35,8 @@ public:
     Galaxy(int planet_number, float size, float min_mass, float max_mass, bool draw_qt);
     
     void init();
-    void update();
-    void draw(RenderWindow &window);
+    void update(int,int);
+    void draw(RenderWindow &window, float angle);
     
 };
 

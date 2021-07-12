@@ -8,6 +8,22 @@
 
 #include "galaxy.hpp"
 
+float Q_sqrt( float number )
+{
+    long i;
+    float x2, y;
+    const float threehalfs = 1.5F;
+    
+    x2 = number * 0.5F;
+    y = number;
+    i = * ( long * ) &y; // evil floating point bit level hacking
+    i = 0x5f3759df - ( i >> 1 ); // what the fuck?
+    y = * ( float * ) &i;
+    y = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
+    //    y = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed
+    
+    return y;
+}
 
 Galaxy::Galaxy(int planet_number, float size, float min_mass, float max_mass, bool draw_qt) {
     this->n = planet_number;
@@ -40,49 +56,54 @@ void Galaxy::init() {
     
 }
 
-void Galaxy::update() {
+void Galaxy::update(int n_start, int n_end) {
     
     qt = new QuadTree(*chunk, 1);
     
-    for (int i = 0; i < this->n; i++) {
+    for (int i =  n_start; i <  n_end; i++) {
         qt->insert(planets[i]);
     }
     
     Vector force;
     
-    for (int i = 0; i < n; i++) {
+    for (int i = n_start; i <  n_end; i++) {
+        
         vector<Planet> founds;
         qt->query(planets[i], founds);
+        planets[i].setDensity(founds.size());
+        
         for(int j = 0; j < founds.size(); j++){
             if(planets[i].pos.x != founds[j].pos.x && planets[i].pos.y != founds[j].pos.y){
-                float dist = get_distance(planets[i].pos, founds[j].pos);
-                if(dist < 2){
-                    dist = 2;
+                
+                float dist_2 = get_distance_2(planets[i].pos, founds[j].pos);
+                if(dist_2 < 4){
+                    dist_2 = 4;
                 }
                 force = founds[j].pos - planets[i].pos;
                 force.normalize();
-                force *= G * (founds[j].mass) / (dist);
+                force *= G * (founds[j].mass) * Q_sqrt(dist_2);
                 planets[i].applyForce(force);
             }
         }
     }
+    qt->Free();
 }
 
-void Galaxy::draw(RenderWindow &window) {
+void Galaxy::draw(RenderWindow &window, float angle) {
     for (int i = 0; i < width * height * 4; i++) {
         pixels[i] = 0;
-        
     }
 
     for (int i = 0; i < n_planet; i++) {
         planets[i].update();
         Uint8 c = (Uint8)map_value(planets[i].mass, this->min_mass, this->max_mass, 0, 255);
-        planets[i].draw(window, pixels, c);
+        planets[i].draw(window, pixels, c, angle);
     }
     
     texture.update(pixels);
     sprite.setTexture(texture);
     window.draw(sprite);
+    
     if(draw_qt){qt->draw(window);}
 }
 

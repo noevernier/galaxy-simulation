@@ -15,7 +15,6 @@ QuadTree::QuadTree(Rectangle chunk, int n){
     this->n = n;
     this->divided = false;
     this->total_mass = 0;
-    this->center_of_mass *= 0;
     
 }
 
@@ -94,13 +93,14 @@ void QuadTree::draw(RenderWindow &window){
 }
 
 void QuadTree::query(Planet planet, vector<Planet> &found){
-    if(this->total_mass != 0 && center_of_mass.x != 0){
+    if(this->total_mass != 0 && center_of_mass.x != 0 && center_of_mass.y != 0){
         
         Vector tot = (this->center_of_mass)/(this->total_mass);
                 
-        float dist = get_distance(planet.pos, tot);
-        float theta = (this->chunk.w) / dist;
-        if(theta < 0.9){
+        float dist = get_distance_2(planet.pos, tot);
+        float theta = (this->chunk.w)*(this->chunk.h);
+        
+        if(theta < precision*precision*dist){
             Planet p(tot.x, tot.y, total_mass);
             found.push_back(p);
         } else if(this->divided){
@@ -110,4 +110,16 @@ void QuadTree::query(Planet planet, vector<Planet> &found){
             this->southwest->query(planet, found);
         }
     }
+}
+
+void QuadTree::Free(){
+
+    if(this->divided){
+        this->northeast->Free();
+        this->northwest->Free();
+        this->southeast->Free();
+        this->southwest->Free();
+    }
+    free(this);
+    
 }
